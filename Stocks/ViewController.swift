@@ -16,15 +16,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var companySymbolLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var priceChangeLabel: UILabel!
+    @IBOutlet weak var companyIconImageView: UIImageView!
     
     // MARK: - Private properties
-    private lazy var companies = [
-        "Apple" : "AAPL",
-        "Microsoft" : "MSFT",
-        "Google" : "GOOG",
-        "Amazon" : "AMZN",
-        "Facebook" : "FB"
-    ]
+    private var companies: [[String : String]]? {
+        didSet {
+            requestQuoteUpdate()
+            companyPickerView.reloadAllComponents()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         
         activityIndicator.hidesWhenStopped = true
         
-        requestQuoteUpdate()
+        requestCompaniesList()
     }
     
     // MARK: - Private methods
@@ -51,6 +51,11 @@ class ViewController: UIViewController {
                 error == nil {
                 self.parseQuote(from: data)
             } else {
+                DispatchQueue.main.async {
+                    let errorAlert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
                 print("Network error")
             }
         }
@@ -58,8 +63,10 @@ class ViewController: UIViewController {
     }
     
     private func requestCompaniesList() {
+        activityIndicator.startAnimating()
+        
         let token = "pk_4b1273e91976462098febe7ae10e4a9f"
-        guard let url = URL(string: "https://cloud.iexapis.com/stable/stock/market/list/infocus?token=\(token)") else {
+        guard let url = URL(string: "https://cloud.iexapis.com/stable/ref-data/symbols?token=\(token)") else {
             return
         }
         
@@ -67,25 +74,64 @@ class ViewController: UIViewController {
             if let data = data,
                 (response as? HTTPURLResponse)?.statusCode == 200,
                 error == nil {
-                self.parseQuote(from: data)
+                self.parseSymbols(from: data)
             } else {
+                DispatchQueue.main.async {
+                    let errorAlert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
                 print("Network error")
             }
         }
         dataTask.resume()
     }
     
+    private func requestIcon(for symbol: String) {
+        guard let url = URL(string: "https://storage.googleapis.com/iexcloud-hl37opg/api/logos/\(symbol).png") else {
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data,
+                (response as? HTTPURLResponse)?.statusCode == 200,
+                error == nil {
+                DispatchQueue.main.async {
+                    self.companyIconImageView.image = UIImage(data: data)
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let errorAlert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
+                print("Network error")
+            }
+        }
+        dataTask.resume()
+    }
+    
+    // MARK: - Parser methods
+    
     private func parseQuote(from data: Data) {
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data)
             
             guard
-                let json = jsonObject as? [String: Any],
+                let json = jsonObject as? [String : Any],
                 let companyName = json["companyName"] as? String,
                 let companySymbol = json["symbol"] as? String,
                 let price = json["latestPrice"] as? Double,
-                let priceChange = json["change"] as? Double else { return print("Invalid JSON") }
+                let priceChange = json["change"] as? Double else {
+                    DispatchQueue.main.async {
+                        let errorAlert = UIAlertController(title: "Error", message: "Stocks for company don't avaliable", preferredStyle: .alert)
+                        errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(errorAlert, animated: true, completion: nil)
+                    }
+                    return
+            }
             
+            self.requestIcon(for: companySymbol)
             DispatchQueue.main.async {
                 self.displayStockInfo(companyName: companyName,
                                       companySymbol: companySymbol,
@@ -97,6 +143,31 @@ class ViewController: UIViewController {
         }
     }
     
+    private func parseSymbols(from data: Data) {
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: data)
+            var companiesList = [[String: String]]()
+            
+            guard
+                let companies = jsonObject as? [[String : Any]] else { return print("Invalid JSON") }
+            
+            for company in companies {
+                if let companyName = company["name"] as? String, let companySymbol = company["symbol"] as? String {
+                    companiesList.append([companyName : companySymbol])
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.companies = companiesList
+            }
+            
+        } catch {
+            print("JSON parsing error: " + error.localizedDescription)
+        }
+    }
+    
+    // MARK: - Display methods
+    
     private func displayStockInfo(companyName: String,
                                   companySymbol: String,
                                   price: Double,
@@ -106,6 +177,7 @@ class ViewController: UIViewController {
         companySymbolLabel.text = companySymbol
         priceLabel.text = "\(price)"
         priceChangeLabel.text = "\(priceChange)"
+        
         if priceChange < 0 {
             priceChangeLabel.textColor = .red
         } else if priceChange > 0 {
@@ -116,15 +188,15 @@ class ViewController: UIViewController {
     }
     
     private func requestQuoteUpdate() {
-        activityIndicator.startAnimating()
         companyNameLabel.text = "-"
         companySymbolLabel.text = "-"
         priceLabel.text = "-"
         priceChangeLabel.textColor = .black
         priceChangeLabel.text = "-"
+        companyIconImageView.image = nil
         
         let selectedRow = companyPickerView.selectedRow(inComponent: 0)
-        let selectedSymbol = Array(companies.values)[selectedRow]
+        guard let selectedSymbol = companies?[selectedRow].values.first else { return }
         requestQuote(for: selectedSymbol)
     }
     
@@ -139,7 +211,10 @@ extension ViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return companies.keys.count
+        guard let companiesCount = companies?.count else {
+            return 0
+        }
+        return companiesCount
     }
 }
 
@@ -148,7 +223,8 @@ extension ViewController: UIPickerViewDataSource {
 extension ViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Array(companies.keys)[row]
+        guard let company = companies?[row].keys.first else { return "Error"}
+        return company
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
