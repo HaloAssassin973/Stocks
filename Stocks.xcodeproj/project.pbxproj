@@ -13,6 +13,13 @@
 		2D6D16FC24F9621B005FA3B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D16FA24F9621B005FA3B6 /* Main.storyboard */; };
 		2D6D16FE24F96222005FA3B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D16FD24F96222005FA3B6 /* Assets.xcassets */; };
 		2D6D170124F96222005FA3B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D6D16FF24F96222005FA3B6 /* LaunchScreen.storyboard */; };
+		45FBB37C24FD9232006A5775 /* StocksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37424FD9232006A5775 /* StocksPresenter.swift */; };
+		45FBB37D24FD9232006A5775 /* StocksWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37524FD9232006A5775 /* StocksWorker.swift */; };
+		45FBB37E24FD9232006A5775 /* StocksRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37624FD9232006A5775 /* StocksRouter.swift */; };
+		45FBB37F24FD9232006A5775 /* StocksModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37724FD9232006A5775 /* StocksModels.swift */; };
+		45FBB38024FD9232006A5775 /* StocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37824FD9232006A5775 /* StocksViewController.swift */; };
+		45FBB38124FD9232006A5775 /* StocksInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37924FD9232006A5775 /* StocksInteractor.swift */; };
+		45FBB38224FD9232006A5775 /* StocksConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FBB37A24FD9232006A5775 /* StocksConfigurator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		2D6D16FD24F96222005FA3B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D6D170024F96222005FA3B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D6D170224F96222005FA3B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45FBB37424FD9232006A5775 /* StocksPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksPresenter.swift; sourceTree = "<group>"; };
+		45FBB37524FD9232006A5775 /* StocksWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksWorker.swift; sourceTree = "<group>"; };
+		45FBB37624FD9232006A5775 /* StocksRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksRouter.swift; sourceTree = "<group>"; };
+		45FBB37724FD9232006A5775 /* StocksModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksModels.swift; sourceTree = "<group>"; };
+		45FBB37824FD9232006A5775 /* StocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewController.swift; sourceTree = "<group>"; };
+		45FBB37924FD9232006A5775 /* StocksInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksInteractor.swift; sourceTree = "<group>"; };
+		45FBB37A24FD9232006A5775 /* StocksConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksConfigurator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,7 @@
 		2D6D16F324F9621B005FA3B6 /* Stocks */ = {
 			isa = PBXGroup;
 			children = (
+				45FBB32F24FD8F00006A5775 /* Scene */,
 				2D6D16F424F9621B005FA3B6 /* AppDelegate.swift */,
 				2D6D16F624F9621B005FA3B6 /* SceneDelegate.swift */,
 				2D6D16F824F9621B005FA3B6 /* ViewController.swift */,
@@ -63,6 +78,28 @@
 				2D6D16FD24F96222005FA3B6 /* Assets.xcassets */,
 				2D6D16FF24F96222005FA3B6 /* LaunchScreen.storyboard */,
 				2D6D170224F96222005FA3B6 /* Info.plist */,
+			);
+			path = Stocks;
+			sourceTree = "<group>";
+		};
+		45FBB32F24FD8F00006A5775 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				45FBB37224FD9220006A5775 /* Stocks */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		45FBB37224FD9220006A5775 /* Stocks */ = {
+			isa = PBXGroup;
+			children = (
+				45FBB37424FD9232006A5775 /* StocksPresenter.swift */,
+				45FBB37524FD9232006A5775 /* StocksWorker.swift */,
+				45FBB37624FD9232006A5775 /* StocksRouter.swift */,
+				45FBB37724FD9232006A5775 /* StocksModels.swift */,
+				45FBB37824FD9232006A5775 /* StocksViewController.swift */,
+				45FBB37924FD9232006A5775 /* StocksInteractor.swift */,
+				45FBB37A24FD9232006A5775 /* StocksConfigurator.swift */,
 			);
 			path = Stocks;
 			sourceTree = "<group>";
@@ -139,8 +176,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D6D16F924F9621B005FA3B6 /* ViewController.swift in Sources */,
+				45FBB37E24FD9232006A5775 /* StocksRouter.swift in Sources */,
+				45FBB37F24FD9232006A5775 /* StocksModels.swift in Sources */,
+				45FBB38124FD9232006A5775 /* StocksInteractor.swift in Sources */,
+				45FBB38024FD9232006A5775 /* StocksViewController.swift in Sources */,
+				45FBB38224FD9232006A5775 /* StocksConfigurator.swift in Sources */,
+				45FBB37D24FD9232006A5775 /* StocksWorker.swift in Sources */,
 				2D6D16F524F9621B005FA3B6 /* AppDelegate.swift in Sources */,
 				2D6D16F724F9621B005FA3B6 /* SceneDelegate.swift in Sources */,
+				45FBB37C24FD9232006A5775 /* StocksPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
