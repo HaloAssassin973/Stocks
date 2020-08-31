@@ -9,31 +9,33 @@
 import Foundation
 
 protocol StocksBusinessLogic: AnyObject {
-
+    func requestQuoteUpdate()
+    func requestCompaniesList()
 }
 
 protocol StocksDataStore: AnyObject {
-
+    
 }
 
 final class StocksInteractor: NSObject, StocksDataStore {
-
-  // MARK: - Public Properties
-
-  var presenter: StocksPresentationLogic?
-  lazy var worker: StocksWorkingLogic = StocksWorker()
-
-  // MARK: - Private Properties
-  
-  //
-
-  // MARK: - Business Logic
-  
-  //
+    
+    // MARK: - Public Properties
+    
+    var presenter: StocksPresentationLogic?
+    lazy var worker: StocksWorkingLogic = StocksWorker()
+    
+    // MARK: - Private Properties
+    
+    
 }
 
-// MARK: - Stocks presentation logic
+// MARK: - Stocks business logic
 
 extension StocksInteractor: StocksBusinessLogic {
-    
+    func requestQuoteUpdate() {
+        
+    }
+    func requestCompaniesList() {
+        
+    }
 }

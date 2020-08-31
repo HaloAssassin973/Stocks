@@ -9,35 +9,35 @@
 import UIKit
 
 protocol StocksRoutingLogic: AnyObject {
-
+    
 }
 
 protocol StocksDataPassing {
-  var dataStore: StocksDataStore? { get }
+    var dataStore: StocksDataStore? { get }
 }
 
 final class StocksRouter: StocksDataPassing {
-
-  // MARK: - Public Properties
-
-  weak var viewController: StocksViewController?
-  var dataStore: StocksDataStore?
-  
-  // MARK: - Private Properties
-  
-  //
-
-  // MARK: - Routing Logic
-  
-  //
-
-  // MARK: - Navigation
-  
-  //
-
-  // MARK: - Passing data
-  
-  //
+    
+    // MARK: - Public Properties
+    
+    weak var viewController: StocksViewController?
+    var dataStore: StocksDataStore?
+    
+    // MARK: - Private Properties
+    
+    //
+    
+    // MARK: - Routing Logic
+    
+    //
+    
+    // MARK: - Navigation
+    
+    //
+    
+    // MARK: - Passing data
+    
+    //
 }
 
 // MARK: - Stocks routing logic

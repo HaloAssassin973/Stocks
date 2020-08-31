@@ -9,16 +9,16 @@
 import Foundation
 
 protocol StocksWorkingLogic {
-
+    
 }
 
 final class StocksWorker: StocksWorkingLogic {
-  
-  // MARK: - Private Properties
-  
-  //
-
-  // MARK: - Working Logic
-  
-  //
+    
+    // MARK: - Private Properties
+    
+    //
+    
+    // MARK: - Working Logic
+    
+    //
 }
