@@ -9,7 +9,8 @@
 import UIKit
 
 protocol StocksPresentationLogic: AnyObject {
-    
+    func presentStock(_ response: StocksModels.FetchStock.Response)
+    func presentCompanies(_ response: StocksModels.FetchCompanies.Response)
 }
 
 final class StocksPresenter {
@@ -20,12 +21,15 @@ final class StocksPresenter {
     
     // MARK: - Private Properties
     
-    //
-    
 }
 
 // MARK: - Stocks presentation logic
 
 extension StocksPresenter: StocksPresentationLogic {
-    
+    func presentStock(_ response: StocksModels.FetchStock.Response) {
+        
+    }
+    func presentCompanies(_ response: StocksModels.FetchCompanies.Response) {
+        
+    }
 }

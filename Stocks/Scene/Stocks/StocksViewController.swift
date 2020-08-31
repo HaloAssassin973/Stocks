@@ -30,19 +30,14 @@ final class StocksViewController: UIViewController {
     private var priceChangeLabel = UILabel()
     private var companyIconImageView = UIImageView()
     
-    private var companies: [[String : String]]? {
-        didSet {
-            interactor.requestQuoteUpdate()
-            companyPickerView.reloadAllComponents()
-        }
-    }
+    private var companies: [[String : String]]?
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        interactor.requestCompaniesList()
+        interactor.handleViewReady()
     }
     
     // MARK: - Private Methods
@@ -112,7 +107,7 @@ extension StocksViewController: StocksDisplayLogic {
         
     }
     func displayCompanies(_ viewModel: StocksModels.FetchCompanies.ViewModel) {
-        
+        companyPickerView.reloadAllComponents()
     }
 }
 
@@ -142,6 +137,8 @@ extension StocksViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        interactor.requestQuoteUpdate()
+        //TODO: access to component
+        let request = StocksModels.FetchStock.Request(symbol: "")
+        interactor.requestQuote(request)
     }
 }

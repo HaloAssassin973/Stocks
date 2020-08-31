@@ -11,18 +11,24 @@ import UIKit
 enum StocksModels {
     
     enum FetchStock {
-        struct Request {}
-        
-        struct Response {}
-        
-        struct ViewModel {}
+        struct Request {
+            let symbol: String
+        }
+        struct Response {
+            
+        }
+        struct ViewModel {
+            
+        }
     }
     
     enum FetchCompanies {
-        struct Request {}
-        
-        struct Response {}
-        
+        struct Request {
+            
+        }
+        struct Response {
+            
+        }
         struct ViewModel {
             let companies: [[String : String]]
         }

@@ -9,7 +9,8 @@
 import Foundation
 
 protocol StocksBusinessLogic: AnyObject {
-    func requestQuoteUpdate()
+    func handleViewReady()
+    func requestQuote(_ request: StocksModels.FetchStock.Request)
     func requestCompaniesList()
 }
 
@@ -32,9 +33,14 @@ final class StocksInteractor: NSObject, StocksDataStore {
 // MARK: - Stocks business logic
 
 extension StocksInteractor: StocksBusinessLogic {
-    func requestQuoteUpdate() {
+    func handleViewReady() {
+        requestCompaniesList()
+    }
+    
+    func requestQuote(_ request: StocksModels.FetchStock.Request) {
         
     }
+    
     func requestCompaniesList() {
         
     }
