@@ -107,6 +107,7 @@ extension StocksViewController: StocksDisplayLogic {
         
     }
     func displayCompanies(_ viewModel: StocksModels.FetchCompanies.ViewModel) {
+        companies = viewModel.companies
         companyPickerView.reloadAllComponents()
     }
 }
@@ -139,6 +140,6 @@ extension StocksViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //TODO: access to component
         let request = StocksModels.FetchStock.Request(symbol: "")
-        interactor.requestQuote(request)
+        interactor.requestStock(request)
     }
 }

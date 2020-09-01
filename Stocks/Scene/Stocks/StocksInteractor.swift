@@ -10,7 +10,7 @@ import Foundation
 
 protocol StocksBusinessLogic: AnyObject {
     func handleViewReady()
-    func requestQuote(_ request: StocksModels.FetchStock.Request)
+    func requestStock(_ request: StocksModels.FetchStock.Request)
     func requestCompaniesList()
 }
 
@@ -37,11 +37,11 @@ extension StocksInteractor: StocksBusinessLogic {
         requestCompaniesList()
     }
     
-    func requestQuote(_ request: StocksModels.FetchStock.Request) {
-        
+    func requestStock(_ request: StocksModels.FetchStock.Request) {
+        presenter?.presentStock(<#T##response: StocksModels.FetchStock.Response##StocksModels.FetchStock.Response#>)
     }
     
     func requestCompaniesList() {
-        
+        presenter?.presentCompanies(<#T##response: StocksModels.FetchCompanies.Response##StocksModels.FetchCompanies.Response#>)
     }
 }
