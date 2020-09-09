@@ -38,10 +38,12 @@ extension StocksInteractor: StocksBusinessLogic {
     }
     
     func requestStock(_ request: StocksModels.FetchStock.Request) {
-        presenter?.presentStock(<#T##response: StocksModels.FetchStock.Response##StocksModels.FetchStock.Response#>)
+        let response = StocksModels.FetchStock.Response()
+        presenter?.presentStock(response)
     }
     
     func requestCompaniesList() {
-        presenter?.presentCompanies(<#T##response: StocksModels.FetchCompanies.Response##StocksModels.FetchCompanies.Response#>)
+        let response = StocksModels.FetchCompanies.Response()
+        presenter?.presentCompanies(response)
     }
 }
